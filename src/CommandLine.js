@@ -10,6 +10,10 @@ class CommandLine extends React.Component {
       history: [""],
     }
   }
+  componentDidMount() {
+    // Help new vistors know what to do
+    this.addCommands("help")
+  }
   loadStartUp = () => {
     var arr = [];
     for(let [i, c] of this.state.messages.entries())

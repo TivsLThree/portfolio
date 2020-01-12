@@ -8,19 +8,24 @@ export default class Commands {
     {
       //‏‏‎[ ‎‏‏‎ ‎‏‏‎ ‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‎‏‏‎ ‎‏‏‎ ‎‎‎‎‎‎‎]invis characters//
       case "help":
-        let v = [
-          {command:"HELP", desc: "Lists all known commands and their descriptions"},
-          {command:"LS", desc: "Lists all project files"},
-          {command:"CLEAR", desc: "Clears the console"},
-          {command:"MORE <project>", desc: "Display the description of the project"},
-          {command:"ABOUT <subject>", desc: "Use to learn a little more about the subject. <br>"+invis.repeat(20)+"Use ME or SKILLS to learn more about them"},
-        ]
-        let retval = "";
-        for(let [i,c] of v.entries())
-        {
-          retval += (c.command +invis.repeat(20 - c.command.length)+c.desc + "<br>");
+        switch(tokens[1]){
+          case undefined:
+          case "":
+          default:
+            let v = [
+              {command:"HELP", desc: "Lists all known commands and their descriptions."},
+              {command:"LS", desc: "Lists all project files"},
+              {command:"CLEAR", desc: "Clears the console"},
+              {command:"MORE <project>", desc: "Display the description of the project"},
+              {command:"ABOUT <subject>", desc: "Use to learn a little more about the subject. <br>"+invis.repeat(20)+"Use ME or SKILLS to learn more about them"},
+            ]
+            let retval = "";
+            for(let [i,c] of v.entries()){
+              retval += (c.command +invis.repeat(20 - c.command.length)+c.desc + "<br>");
+            }
+            return retval;
+
         }
-          return retval;
       case "about":
         switch(tokens[1]){
           case undefined:
