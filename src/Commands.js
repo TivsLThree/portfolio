@@ -1,5 +1,6 @@
 export default class Commands {
   static checkCommand(input) {
+    var sorry = "Sorry, this portfolio is still under construction. I have yet to add this functionality. :("
     var tokens = input.toLowerCase().split(" ")
     var cmd = tokens[0];
     var invis = "‎‏‏‎ ‎‎‏‏‎";
@@ -32,11 +33,13 @@ export default class Commands {
             return `Invalid argument ${tokens[1]}. Use HELP to learn more about the valid arguments`
         }
       case "ls":
-        return "";
+        return sorry;
       case "more":
-        return "";
+        return sorry;
       case "":
         return "";
+      case "clear":
+        return "levih> clear"
       default:
         return  `'${cmd}' is not recognized as an internal or external command, operable program or batch file.`
     }

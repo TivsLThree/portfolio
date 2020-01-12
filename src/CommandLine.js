@@ -1,10 +1,13 @@
 import React from 'react'
 import Commands from "./Commands"
+var cursor = 0;
+var isPrevKeyArr = false;
 class CommandLine extends React.Component {
   constructor(props){
     super()
     this.state = {
-      messages: props.startupMessages
+      messages: props.startupMessages,
+      history: [""],
     }
   }
   loadStartUp = () => {
@@ -27,21 +30,41 @@ class CommandLine extends React.Component {
     document.getElementById("terminalInput").innerHTML = "";
     this.setState({
       messages: [...this.state.messages, "levih>" + input]})
+      // add to history
+    this.setState({
+      history: [...this.state.history, input]})
         //Check command
         await new Promise(r => setTimeout(r, 10))
     this.setState({
       messages: [...this.state.messages, Commands.checkCommand(input)]});
-
+      if(input == "clear") {
+        this.setState({messages: []})
+      }
 
   }
   onKeyDown = (e) => {
-    let input =  document.getElementById("terminalInput").innerHTML;
+    if(!isPrevKeyArr)
+      cursor = 0;
+
+    let input =  document.getElementById("terminalInput").innerHTML.toLowerCase();
     if(e.key == 'Enter')
     {
       e.preventDefault();
       this.addCommands(input);
+    } else if(e.key == "ArrowUp"){
+      if(cursor < (this.state.history.length -1)) {
+        cursor++;
+      }
+    } else if(e.key == "ArrowDown"){
+      if(cursor > 0) {
+        cursor--;
+      }
     }
-
+    if(e.key =="ArrowUp" || e.key == "ArrowDown") {
+      let text = this.state.history[this.state.history.length - cursor];
+      document.getElementById("terminalInput").innerHTML = (text === undefined) ? "" : text;
+    }
+        isPrevKeyArr = (e.key =="ArrowUp" || e.key == "ArrowDown")
   }
   render() {
     const startUpMessages = this.loadStartUp();
